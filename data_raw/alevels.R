@@ -10,7 +10,7 @@ ei_a_levels <- a_levels |>
   filter(str_starts(time_period, "202223")) |> # Filter to only include data from 2022/23
   select(pcon_code,
          average_a_level_grade = aps_per_entry_grade_alev)|>
-  mutate(average_a_level_grade = case_when(
+  mutate(average_a_level_grade = case_when( # Change grades to numeric scale
     average_a_level_grade == "A-" ~ 10,
     average_a_level_grade == "B+" ~ 9,
     average_a_level_grade == "B"  ~ 8,
