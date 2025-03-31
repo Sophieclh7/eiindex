@@ -12,4 +12,4 @@ ei_gcses <- gcses |>
          average_gcse_grade = avg_att8) # Filter for average attainment 8 grade
 
 # ---- Save output to data/ folder ----
-write.csv(ei_a_levels, "data/ei_gcses.csv", row.names = FALSE)
+write.csv(ei_gcses, "data/ei_gcses.csv", row.names = FALSE)
