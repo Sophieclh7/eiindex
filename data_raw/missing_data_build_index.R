@@ -41,8 +41,13 @@ ei_index_na <- ei_data_standardised_na |>
     .fns = ~ (. + 10) * 10  # Apply transformation to each column
   ))
 
-# Add asterisks to the pcon_code column (for all rows)
+# Add local authority information
+ei_la_lookup <- read.csv("data/ei_la_lookup.csv")
+ei_index_na <- inner_join(ei_la_lookup, ei_index_na, by = "pcon_code")
+
+# Add asterisks to constituency codes and names
 ei_index_na$pcon_code <- paste0(ei_index_na$pcon_code, "*")
+ei_index_na$pcon_name <- paste0(ei_index_na$pcon_name, "*")
 
 # Save to data/folder
 write.csv(ei_index_na, "data/ei_index_na.csv", row.names = FALSE)

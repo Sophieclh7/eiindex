@@ -117,6 +117,10 @@ ei_index_complete_case <- ei_data_cleaned |>
     .fns = ~ (. + 10) * 10  # Apply transformation to each column
   ))
 
+# Add local authority information
+ei_la_lookup <- read.csv("data/ei_la_lookup.csv")
+ei_index_complete_case <- inner_join(ei_la_lookup, ei_index_complete_case, by = "pcon_code")
+
 # Save output to data/folder
 write.csv(ei_index_complete_case, "data/ei_index_complete_case.csv", row.names = FALSE)
 
@@ -131,3 +135,6 @@ ei_index <- bind_rows(ei_index_complete_case, ei_index_na)
 ei_index$pcon_code <- ifelse(ei_index$pcon_code %in% c("E14001055", "E14001017"),
                              paste0(ei_index$pcon_code, "^"),
                              ei_index$pcon_code)
+
+# Save output to data/folder
+write.csv(ei_index, "data/ei_index.csv", row.names = FALSE)
