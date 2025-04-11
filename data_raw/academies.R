@@ -4,10 +4,10 @@ library(dplyr)
 library(stringr)
 
 # ---- Load data ----
-academies <- read.csv("downloaded_datasets/spc_school_level_underlying_data.csv")
+academies_dataset <- read.csv("downloaded_datasets/spc_school_level_underlying_data.csv")
 
 # ---- Clean dataset ----
-ei_academies <- academies |>
+academies <- academies_dataset |>
   select(pcon_code = parl_con_code,
          typeofestablishment_name, 
          headcount.of.pupils) |>
@@ -25,5 +25,5 @@ ei_academies <- academies |>
   filter(!str_starts(pcon_code, "Unknown")) # Remove the one row which isn't a constituency 
 
 # ---- Save output to data/ folder ----
-write.csv(ei_academies, "data/ei_academies.csv", row.names = FALSE)
+write.csv(academies, "data/academies.csv", row.names = FALSE)
 

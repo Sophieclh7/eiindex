@@ -3,10 +3,10 @@ library(tidyverse)
 library(dplyr)
 
 # ---- Load data ----
-private <- read.csv("downloaded_datasets/spc_school_level_underlying_data.csv")
+private_dataset <- read.csv("downloaded_datasets/spc_school_level_underlying_data.csv")
 
 # ---- Clean dataset ----
-ei_private <- private |>
+private <- private_dataset |>
   select(pcon_code = parl_con_code,
          phase_type_grouping, 
          headcount.of.pupils) |> 
@@ -25,6 +25,6 @@ ei_private <- private |>
   filter(!str_starts(pcon_code, "Unknown")) # Remove the one row which isn't a constituency
 
 # ---- Save output to data/ folder ----
-write.csv(ei_private, "data/ei_private.csv", row.names = FALSE)
+write.csv(private, "data/private.csv", row.names = FALSE)
 
   

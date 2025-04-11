@@ -3,10 +3,10 @@ library(tidyverse)
 library(dplyr)
 
 # ---- Load data ----
-fsm <- read.csv("downloaded_datasets/spc_school_level_underlying_data.csv")
+fsm_dataset <- read.csv("downloaded_datasets/spc_school_level_underlying_data.csv")
 
 # ---- Clean dataset ----
-ei_fsm <- fsm |>
+fsm <- fsm_dataset |>
   select(pcon_code = parl_con_code,
          headcount.of.pupils,
          percent_fsm = X..of.pupils.known.to.be.eligible.for.free.school.meals) |>
@@ -24,4 +24,4 @@ ei_fsm <- fsm |>
   filter(!str_starts(pcon_code, "Unknown")) # Remove the one row which isn't a constituency
 
 # ---- Save output to data/ folder ----
-write.csv(ei_fsm, "data/ei_fsm.csv", row.names = FALSE)
+write.csv(fsm, "data/fsm.csv", row.names = FALSE)
