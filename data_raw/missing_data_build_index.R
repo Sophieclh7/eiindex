@@ -12,21 +12,21 @@ ei_data_standardised_na <- ei_data_standardised_na |>
 # Create the composite score
 # Subdomain 1
 ei_data_standardised_na$attainment_subdomain <- 
-  -0.43 * ei_data_standardised_na$average_a_level_grade +
-  -0.52 * ei_data_standardised_na$average_gcse_grade +
-  -0.41 * ei_data_standardised_na$ks2_percent_meeting_standard +
-  -0.37 * ei_data_standardised_na$percent_progressed
+  0.43 * ei_data_standardised_na$average_a_level_grade +
+  0.52 * ei_data_standardised_na$average_gcse_grade +
+  0.41 * ei_data_standardised_na$ks2_percent_meeting_standard +
+  0.37 * ei_data_standardised_na$percent_progressed
 
 # Subdomain 2
 ei_data_standardised_na$deprivation_subdomain <- 
-  -0.50 * ei_data_standardised_na$weighted_percent_fsm +
+  0.50 * ei_data_standardised_na$weighted_percent_fsm +
   0.62 * ei_data_standardised_na$funding_per_pupil +
   0.46 * ei_data_standardised_na$pupil_to_qual_teacher_ratio
 
 # Subdomain 3
 ei_data_standardised_na$school_type_subdomain <- 
   0.60 * ei_data_standardised_na$weighted_percent_private +
-  -0.46 * ei_data_standardised_na$weighted_percent_academy
+  0.46 * ei_data_standardised_na$weighted_percent_academy
 
 # Composite score
 ei_data_standardised_na$domain <- 

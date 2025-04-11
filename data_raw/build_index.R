@@ -88,21 +88,21 @@ screeplot(pca_result, type = "lines", main = "Scree Plot of PCA")
 # Create the composite score
 # Subdomain 1
 ei_data_cleaned$attainment_subdomain <- 
-  -0.43 * ei_data_cleaned$average_a_level_grade +
-  -0.52 * ei_data_cleaned$average_gcse_grade +
-  -0.41 * ei_data_cleaned$ks2_percent_meeting_standard +
-  -0.37 * ei_data_cleaned$percent_progressed
+  0.43 * ei_data_cleaned$average_a_level_grade +
+  0.52 * ei_data_cleaned$average_gcse_grade +
+  0.41 * ei_data_cleaned$ks2_percent_meeting_standard +
+  0.37 * ei_data_cleaned$percent_progressed
 
 # Subdomain 2
 ei_data_cleaned$deprivation_subdomain <- 
-  -0.50 * ei_data_cleaned$weighted_percent_fsm +
+  0.50 * ei_data_cleaned$weighted_percent_fsm +
   0.62 * ei_data_cleaned$funding_per_pupil +
   0.46 * ei_data_cleaned$pupil_to_qual_teacher_ratio
 
 # Subdomain 3
 ei_data_cleaned$school_type_subdomain <- 
   0.60 * ei_data_cleaned$weighted_percent_private +
-  -0.46 * ei_data_cleaned$weighted_percent_academy
+  0.46 * ei_data_cleaned$weighted_percent_academy
 
 # Composite score
 ei_data_cleaned$domain <- 

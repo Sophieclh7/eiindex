@@ -19,18 +19,51 @@ constituencies_shapefile_england <- constituencies_shapefile |>
 plot(st_geometry(constituencies_shapefile_england))
 
 # Load ei index data
-ei_index <- read.csv("data/ei_index.csv")
+ei_index_deciles <- read.csv("data/ei_index_deciles.csv")
 
 # Join ei index data to spatial data
-joined_data <- left_join(constituencies_shapefile_england, ei_index, by = c("PCON22CD" = "pcon_code"))
+ei_spatial_data <- left_join(constituencies_shapefile_england, ei_index_deciles, by = c("PCON22CD" = "pcon_code"))
 
-# Create heatmap for domain scores
-ggplot(joined_data) +
-  geom_sf(aes(fill = domain), color = NA) +
-  scale_fill_viridis_c(option = "C", na.value = "grey80") +
+# Create heatmap for domain deciles
+ggplot(ei_spatial_data) +
+  geom_sf(aes(fill = domain_decile), color = NA) +
+  scale_fill_viridis_c(option = "C") +
   theme_minimal() +
   labs(title = "Heatmap of Educational Inequality (Composite Score)",
-       fill = "EI Score") +
+       fill = "EI Decile") +
+  theme(axis.text = element_blank(),
+        axis.ticks = element_blank(),
+        axis.title = element_blank())
+
+# Create heatmap for attainment subdomain deciles
+ggplot(ei_spatial_data) +
+  geom_sf(aes(fill = attainment_subdomain_decile), color = NA) +
+  scale_fill_viridis_c(option = "C") +
+  theme_minimal() +
+  labs(title = "Heatmap of Educational Inequality (Attainment subdomain)",
+       fill = "EI Decile") +
+  theme(axis.text = element_blank(),
+        axis.ticks = element_blank(),
+        axis.title = element_blank())
+
+# Create heatmap for deprivation subdomain deciles
+ggplot(ei_spatial_data) +
+  geom_sf(aes(fill = deprivation_subdomain_decile), color = NA) +
+  scale_fill_viridis_c(option = "C") +
+  theme_minimal() +
+  labs(title = "Heatmap of Educational Inequality (Deprivation subdomain)",
+       fill = "EI Decile") +
+  theme(axis.text = element_blank(),
+        axis.ticks = element_blank(),
+        axis.title = element_blank())
+
+# Create heatmap for school type subdomain deciles
+ggplot(ei_spatial_data) +
+  geom_sf(aes(fill = school_type_subdomain_decile), color = NA) +
+  scale_fill_viridis_c(option = "C") +
+  theme_minimal() +
+  labs(title = "Heatmap of Educational Inequality (School type subdomain)",
+       fill = "EI Decile") +
   theme(axis.text = element_blank(),
         axis.ticks = element_blank(),
         axis.title = element_blank())
