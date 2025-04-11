@@ -132,9 +132,9 @@ ei_index_na <- read.csv("data/ei_index_na.csv")
 ei_index <- bind_rows(ei_index_complete_case, ei_index_na)
 
 # Add ^ symbol next to the pcon_code for the rows that used imputation
-ei_index$pcon_code <- ifelse(ei_index$pcon_code %in% c("E14001055", "E14001017"),
-                             paste0(ei_index$pcon_code, "^"),
-                             ei_index$pcon_code)
+ei_index$pcon_name <- ifelse(ei_index$pcon_name %in% c("E14001055", "E14001017"),
+                             paste0(ei_index$pcon_name, "^"),
+                             ei_index$pcon_name)
 
 # Save output to data/folder
 write.csv(ei_index, "data/ei_index.csv", row.names = FALSE)
