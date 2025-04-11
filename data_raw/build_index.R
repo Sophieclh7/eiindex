@@ -33,8 +33,8 @@ outlier_skew_summary <- ei_data_complete_case |>
   map_dfr(outliers_skew, .id = "indicator")
 print(outlier_skew_summary)
 
-# Log transform Allocation per pupil for constituency (avoid log(0) by adding a small constant)
-ei_data_complete_case$`Allocation per pupil for constituency` <- log(ei_data_complete_case$`Allocation per pupil for constituency`)
+# Log transform funding per pupil
+ei_data_complete_case$funding_per_pupil <- log(ei_data_complete_case$funding_per_pupil)
 
 # Log transform weighted_percent_private
 ei_data_complete_case$weighted_percent_private <- log(ei_data_complete_case$weighted_percent_private + 1)
@@ -48,7 +48,7 @@ outlier_skew_summary_trans <- ei_data_complete_case |>
 print(outlier_skew_summary_trans)
 
 # Apply transformations to full dataset
-ei_data$`Allocation per pupil for constituency` <- log(ei_data$`Allocation per pupil for constituency`)
+ei_data$funding_per_pupil <- log(ei_data$funding_per_pupil)
 
 # Log transform weighted_percent_private
 ei_data$weighted_percent_private <- log(ei_data$weighted_percent_private + 1)
@@ -68,10 +68,10 @@ write.csv(ei_data_standardised, "data/ei_data_standardised.csv", row.names = FAL
 
 # Remove rows with NA values
 # See missing data file 
-ei_data_cleaned <- ei_data_standardised[complete.cases(ei_data), ]
+ei_data_cleaned <- ei_data_standardised[complete.cases(ei_data_standardised), ]
 
 # Perform PCA (excluding `pcon_code`)
-pca_result <- prcomp(ei_data_standardised[, -1], center = TRUE, scale. = TRUE)
+pca_result <- prcomp(ei_data_cleaned[, -1], center = TRUE, scale. = TRUE)
 
 # Summary of PCA (explains variance per component)
 summary(pca_result)
@@ -87,31 +87,31 @@ screeplot(pca_result, type = "lines", main = "Scree Plot of PCA")
 
 # Create the composite score
 # Subdomain 1
-ei_data_standardised$attainment_subdomain <- 
-  -0.43 * ei_data_standardised$average_a_level_grade +
-  -0.52 * ei_data_standardised$average_gcse_grade +
-  -0.41 * ei_data_standardised$ks2_percent_meeting_standard +
-  -0.37 * ei_data_standardised$percent_progressed
+ei_data_cleaned$attainment_subdomain <- 
+  -0.43 * ei_data_cleaned$average_a_level_grade +
+  -0.52 * ei_data_cleaned$average_gcse_grade +
+  -0.41 * ei_data_cleaned$ks2_percent_meeting_standard +
+  -0.37 * ei_data_cleaned$percent_progressed
 
 # Subdomain 2
-ei_data_standardised$deprivation_subdomain <- 
-  -0.50 * ei_data_standardised$weighted_percent_fsm +
-  0.62 * ei_data_standardised$`Allocation per pupil for constituency` +
-  0.46 * ei_data_standardised$pupil_to_qual_teacher_ratio
+ei_data_cleaned$deprivation_subdomain <- 
+  -0.50 * ei_data_cleaned$weighted_percent_fsm +
+  0.62 * ei_data_cleaned$funding_per_pupil +
+  0.46 * ei_data_cleaned$pupil_to_qual_teacher_ratio
 
 # Subdomain 3
-ei_data_standardised$school_type_subdomain <- 
-  0.60 * ei_data_standardised$weighted_percent_private +
-  -0.46 * ei_data_standardised$weighted_percent_academy
+ei_data_cleaned$school_type_subdomain <- 
+  0.60 * ei_data_cleaned$weighted_percent_private +
+  -0.46 * ei_data_cleaned$weighted_percent_academy
 
 # Composite score
-ei_data_standardised$domain <- 
-  ei_data_standardised$attainment_subdomain +
-  ei_data_standardised$deprivation_subdomain +
-  ei_data_standardised$school_type_subdomain
+ei_data_cleaned$domain <- 
+  ei_data_cleaned$attainment_subdomain +
+  ei_data_cleaned$deprivation_subdomain +
+  ei_data_cleaned$school_type_subdomain
 
 # Transform scores to be similar to HIE scale
-ei_index_complete_case <- ei_data_standardised |>
+ei_index_complete_case <- ei_data_cleaned |>
   mutate(across(
     .cols = -pcon_code,  # Exclude pcon_code column
     .fns = ~ (. + 10) * 10  # Apply transformation to each column
@@ -119,3 +119,15 @@ ei_index_complete_case <- ei_data_standardised |>
 
 # Save output to data/folder
 write.csv(ei_index_complete_case, "data/ei_index_complete_case.csv", row.names = FALSE)
+
+# Add rows for missing data
+# Load missing data rows
+ei_index_na <- read.csv("data/ei_index_na.csv")
+
+# Join the two datasets
+ei_index <- bind_rows(ei_index_complete_case, ei_index_na)
+
+# Add ^ symbol next to the pcon_code for the rows that used imputation
+ei_index$pcon_code <- ifelse(ei_index$pcon_code %in% c("E14001055", "E14001017"),
+                             paste0(ei_index$pcon_code, "^"),
+                             ei_index$pcon_code)
