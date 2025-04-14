@@ -1,2 +1,2 @@
-# sh_dissertation
+# educational-inequality-index
 Dissertation repository
