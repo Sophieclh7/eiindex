@@ -5,8 +5,11 @@ library(tidyverse)
 library(dplyr)
 
 # I acknowledge the use of ChatGPT for assistance joining the rda files
-# ---- Load all .rda files ----
+# ---- Load all .rda files that do not start with "ei" ----
 rda_files <- list.files(path = "data", pattern = "\\.rda$", full.names = TRUE)
+
+# Exclude files that start with "ei"
+rda_files <- rda_files[!str_starts(basename(rda_files), "ei")]
 
 # Load each RDA file and extract the object
 datasets <- lapply(rda_files, function(file) {

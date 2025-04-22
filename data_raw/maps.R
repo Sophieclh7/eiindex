@@ -93,5 +93,5 @@ lowest_scoring <- ei_spatial_data |>
          str_starts(school_type_subdomain_decile_lowest, "Low"))
 
 # Create histograms for domain and subdomain scores
-ei_index <- read.csv("data/ei_index.csv")
+load("data/ei_index.rda")
 hist(ei_index$domain)

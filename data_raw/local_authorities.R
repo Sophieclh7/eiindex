@@ -21,4 +21,3 @@ ei_la_lookup <- la_lookup |>
 
 # Save to data/folder
 usethis::use_data(ei_la_lookup, overwrite = TRUE)
-

@@ -42,7 +42,7 @@ ei_index_na <- ei_data_standardised_na |>
   ))
 
 # Add local authority information
-ei_la_lookup <- read.csv("data/ei_la_lookup.csv")
+load("data/ei_la_lookup.rda")
 ei_index_na <- inner_join(ei_la_lookup, ei_index_na, by = "pcon_code")
 
 # Add asterisks to constituency codes and names
