@@ -1,5 +1,5 @@
 # Load data
-ei_index <- read.csv("data/ei_index.csv")
+load("data/ei_index.rda")
 
 # Add deciles to each subdomain and the domain
 ei_index_deciles <- ei_index |>
@@ -21,4 +21,4 @@ ei_index_deciles <- ei_index |>
   )
 
 # Save to data/folder
-write.csv(ei_index_deciles, "data/ei_index_deciles.csv", row.names = FALSE)
+usethis::use_data(ei_index_deciles, overwrite = TRUE)

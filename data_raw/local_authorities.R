@@ -20,5 +20,5 @@ ei_la_lookup <- la_lookup |>
          la_name)
 
 # Save to data/folder
-write.csv(ei_la_lookup, "data/ei_la_lookup.csv", row.names = FALSE)
+usethis::use_data(ei_la_lookup, overwrite = TRUE)
 

@@ -6,7 +6,7 @@ library(readr)
 library(e1071)
 
 # ---- Load dataset ---- 
-ei_data <- read_csv("data/ei_data.csv")
+load("data/ei_data.rda")
 
 # Create subset with no nas
 ei_data_complete_case <- ei_data[complete.cases(ei_data), ]
@@ -64,7 +64,7 @@ ei_data_standardised <- ei_data_scaled |>
   mutate(across(-pcon_code, ~ (.-mean(., na.rm = TRUE)) / sd(., na.rm = TRUE)))
 
 # Save output to data/folder (so can be used for missing data build index)
-write.csv(ei_data_standardised, "data/ei_data_standardised.csv", row.names = FALSE)
+usethis::use_data(ei_data_standardised, overwrite = TRUE)
 
 # Remove rows with NA values
 # See missing data file 
@@ -118,15 +118,15 @@ ei_index_complete_case <- ei_data_cleaned |>
   ))
 
 # Add local authority information
-ei_la_lookup <- read.csv("data/ei_la_lookup.csv")
+load("data/ei_la_lookup.rda")
 ei_index_complete_case <- inner_join(ei_la_lookup, ei_index_complete_case, by = "pcon_code")
 
 # Save output to data/folder
-write.csv(ei_index_complete_case, "data/ei_index_complete_case.csv", row.names = FALSE)
+usethis::use_data(ei_index_complete_case, overwrite = TRUE)
 
 # Add rows for missing data
 # Load missing data rows
-ei_index_na <- read.csv("data/ei_index_na.csv")
+load("data/ei_index_na.rda")
 
 # Join the two datasets
 ei_index <- bind_rows(ei_index_complete_case, ei_index_na)
@@ -137,4 +137,4 @@ ei_index$pcon_name <- ifelse(ei_index$pcon_name %in% c("E14001055", "E14001017")
                              ei_index$pcon_name)
 
 # Save output to data/folder
-write.csv(ei_index, "data/ei_index.csv", row.names = FALSE)
+usethis::use_data(ei_index, overwrite = TRUE)

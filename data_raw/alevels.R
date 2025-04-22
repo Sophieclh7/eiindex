@@ -5,35 +5,26 @@ library(dplyr)
 # ---- Load data ----
 a_levels_dataset <- read.csv("downloaded_datasets/aggregated_attainment_by_pcon_202024.csv")
 
-# Define the grade conversion
-grade_conversion <- c(
-  "A-" = 10, 
-  "B+" = 9, 
-  "B" = 8, 
-  "B-" = 7,
-  "C+" = 6, 
-  "C" = 5, 
-  "C-" = 4, 
-  "D+" = 3,
-  "D" = 2, 
-  "E" = 1
-)
+# Convert z values to na
+a_levels_dataset <- a_levels_dataset |>
+  mutate(
+    aps_per_entry_alev = na_if(aps_per_entry_alev, "z"),
+    aps_per_entry_alev = as.numeric(aps_per_entry_alev)  # force other non-numeric to NA
+  )
 
-# Pull 2023/24 grades for Worthing West and Warrington North for imputation
+# Pull 2023/24 imputation data
 impute_data <- a_levels_dataset |>
   filter(str_starts(time_period, "202324"),
          pcon_name %in% c("Warrington North", "Worthing West")) |>
-  mutate(average_a_level_grade = grade_conversion[aps_per_entry_grade_alev]) |>
-  select(pcon_name, imputed_grade = average_a_level_grade)
+  select(pcon_name, imputed_grade = aps_per_entry_alev)
 
-# Clean 2022/23 data
+# Clean and impute 2022/23 data
 a_levels <- a_levels_dataset |>
   filter(str_starts(time_period, "202223")) |>
-  select(pcon_code, pcon_name, aps_per_entry_grade_alev) |>
-  mutate(average_a_level_grade = grade_conversion[aps_per_entry_grade_alev]) |>
+  select(pcon_code, pcon_name, aps_per_entry_alev) |>
   left_join(impute_data, by = "pcon_name") |>
   mutate(
-    average_a_level_grade = coalesce(average_a_level_grade, imputed_grade)
+    average_a_level_grade = coalesce(aps_per_entry_alev, imputed_grade)
   ) |>
   select(pcon_code, average_a_level_grade)
 

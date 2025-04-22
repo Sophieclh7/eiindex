@@ -1,5 +1,5 @@
 # Load data
-ei_data_standardised <- read.csv("data/ei_data_standardised.csv")
+load("data/ei_data_standardised.rda")
 
 # Create subset of rows with missing data
 ei_data_standardised_na <- ei_data_standardised |> 
@@ -49,4 +49,4 @@ ei_index_na <- inner_join(ei_la_lookup, ei_index_na, by = "pcon_code")
 ei_index_na$pcon_name <- paste0(ei_index_na$pcon_name, "*")
 
 # Save to data/folder
-write.csv(ei_index_na, "data/ei_index_na.csv", row.names = FALSE)
+usethis::use_data(ei_index_na, overwrite = TRUE)
