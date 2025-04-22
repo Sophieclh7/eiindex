@@ -12,4 +12,4 @@ pt_ratio <- pt_ratio_dataset |>
          pupil_to_qual_teacher_ratio)
 
 # ---- Save output to data/ folder ----
-write.csv(pt_ratio, "data/pt_ratio.csv", row.names = FALSE)
+usethis::use_data(pt_ratio, overwrite = TRUE)

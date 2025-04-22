@@ -13,4 +13,4 @@ funding <- funding_dataset |>
          `funding_per_pupil` = `Cons,.Allocation.per.Pupil.(Real)`)
 
 # ---- Save output to data/ folder ----
-write.csv(funding, "data/funding.csv", row.names = FALSE)
+usethis::use_data(funding, overwrite = TRUE)

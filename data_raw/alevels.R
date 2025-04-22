@@ -38,4 +38,4 @@ a_levels <- a_levels_dataset |>
   select(pcon_code, average_a_level_grade)
 
 # ---- Save output to data/ folder ----
-write.csv(a_levels, "data/a_levels.csv", row.names = FALSE)
+usethis::use_data(a_levels, overwrite = TRUE)

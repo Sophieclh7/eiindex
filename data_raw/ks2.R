@@ -13,4 +13,4 @@ ks2 <- ks2_dataset |>
          ks2_percent_meeting_standard = pt_rwm_met_expected_standard)
 
 # ---- Save output to data/ folder ----
-write.csv(ks2, "data/ks2.csv", row.names = FALSE)
+usethis::use_data(ks2, overwrite = TRUE)

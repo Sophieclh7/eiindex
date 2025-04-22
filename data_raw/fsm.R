@@ -24,4 +24,4 @@ fsm <- fsm_dataset |>
   filter(!str_starts(pcon_code, "Unknown")) # Remove the one row which isn't a constituency
 
 # ---- Save output to data/ folder ----
-write.csv(fsm, "data/fsm.csv", row.names = FALSE)
+usethis::use_data(fsm, overwrite = TRUE)

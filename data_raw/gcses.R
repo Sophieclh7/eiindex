@@ -12,4 +12,4 @@ gcses <- gcses_dataset |>
          average_gcse_grade = avg_att8) # Filter for average attainment 8 grade
 
 # ---- Save output to data/ folder ----
-write.csv(gcses, "data/gcses.csv", row.names = FALSE)
+usethis::use_data(gcses, overwrite = TRUE)

@@ -14,4 +14,4 @@ progression <- progression_dataset |>
          percent_progressed = all_progressed) # Percentage who progress to higher education/apprenticeship 
 
 # ---- Save output to data/ folder ----
-write.csv(progression, "data/progression.csv", row.names = FALSE)
+usethis::use_data(progression, overwrite = TRUE)

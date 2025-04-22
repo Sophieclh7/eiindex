@@ -25,5 +25,4 @@ academies <- academies_dataset |>
   filter(!str_starts(pcon_code, "Unknown")) # Remove the one row which isn't a constituency 
 
 # ---- Save output to data/ folder ----
-write.csv(academies, "data/academies.csv", row.names = FALSE)
-
+usethis::use_data(academies, overwrite = TRUE)
