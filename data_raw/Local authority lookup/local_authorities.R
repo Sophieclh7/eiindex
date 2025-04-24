@@ -12,5 +12,5 @@ ei_la_lookup <- la_lookup |>
   slice(1) |> # Collapse to only include a row for each constituency and their local authority
   select(pcon_code = PCON23CD, pcon_name = PCON23NM, la_code = UTLA23CD, la_name= UTLA23NM) # Select relevant columns
 
-# Save to data/folder
+# ---- Save output to data/folder ----
 usethis::use_data(ei_la_lookup, overwrite = TRUE)

@@ -54,5 +54,5 @@ ei_data_scaled <- ei_data |>
 ei_data_standardised <- ei_data_scaled |>
   mutate(across(-pcon_code, ~ (.-mean(., na.rm = TRUE)) / sd(., na.rm = TRUE))) # Ensure calculation ignores NA values
 
-# Save output to data/folder (so can be used for missing data build index)
+# ---- Save output to data/folder ----
 usethis::use_data(ei_data_standardised, overwrite = TRUE)

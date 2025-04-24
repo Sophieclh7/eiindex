@@ -64,5 +64,5 @@ ei_index_complete_case <- ei_data_cleaned |>
 # ---- Add local authority information ----
 ei_index_complete_case <- inner_join(ei_la_lookup, ei_index_complete_case, by = "pcon_code")
 
-# Save output to data/folder
+# ---- Save output to data/folder ----
 usethis::use_data(ei_index_complete_case, overwrite = TRUE)
