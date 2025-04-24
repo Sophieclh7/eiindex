@@ -15,6 +15,7 @@ fsm <- fsm_dataset |>
   summarize( # Create column for weighted percentage of pupils eligible for FSMs
     weighted_percent_fsm = sum(percent_fsm * headcount.of.pupils)/sum(headcount.of.pupils), # Weighted pupils eligible for FSMs divide by total pupils in constituency
   ) |> 
+  ungroup() |>
   select(pcon_code = parl_con_code,
          weighted_percent_fsm) |>
   filter(!str_starts(pcon_code, "Unknown")) # Remove the one row which isn't a constituency

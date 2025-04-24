@@ -14,6 +14,7 @@ private <- private_dataset |>
   summarize( # Create column for weighted percentage of pupils in private schools
     weighted_percent_private = sum(headcount.of.pupils * is_private)/sum(headcount.of.pupils)*100, # Weighted number private school pupils divided by total pupils per constituency, multiplied by 100 to get percentage
   ) |> 
+  ungroup() |>
   select(pcon_code = parl_con_code, weighted_percent_private) |> # Select relevant columns
   filter(!str_starts(pcon_code, "Unknown")) # Remove the one row which isn't a constituency
 
