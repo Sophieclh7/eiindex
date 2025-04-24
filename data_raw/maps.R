@@ -92,6 +92,18 @@ lowest_scoring <- ei_spatial_data |>
          str_starts(deprivation_subdomain_decile_lowest, "Low"),
          str_starts(school_type_subdomain_decile_lowest, "Low"))
 
-# Create histograms for domain and subdomain scores
+# Create subset of constituencies in lowest three deciles for all subdomains
+lowest_scoring <- ei_spatial_data |>
+  filter(str_starts(attainment_subdomain_decile_lowest, "Low"),
+         str_starts(deprivation_subdomain_decile_lowest, "Low"),
+         str_starts(school_type_subdomain_decile_lowest, "Low"))
+
+# Load index
 load("data/ei_index.rda")
-hist(ei_index$domain)
+# Summary statistics table
+st(ei_index)
+# Histograms for each domain/subdomain
+hist(ei_index$domain, main = "Domain Histogram", xlab = "Score", ylab = "Frequency")
+hist(ei_index$attainment_subdomain, main = "Attainment Subdomain Histogram", xlab = "Score", ylab = "Frequency")
+hist(ei_index$deprivation_subdomain, main = "Deprivation Subdomain Histogram", xlab = "Score", ylab = "Frequency")
+hist(ei_index$school_type_subdomain,, main = "School type Subdomain Histogram", xlab = "Score", ylab = "Frequency")
