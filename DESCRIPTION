@@ -1,7 +1,9 @@
 Package: eiindex
 Title: Educational inequality index
 Version: 0.1.0
-Authors@R: Sophie Hammond
+Authors@R: person(given = "Sophie", family = "Hammond", 
+                 email = "your.email@example.com", 
+                 role = c("aut", "cre"))
 Description: Datasets and scripts for construction of educational inequality index
 License: MIT
 Encoding: UTF-8
