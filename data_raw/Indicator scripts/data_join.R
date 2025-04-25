@@ -3,7 +3,6 @@ library(tidyverse)
 library(dplyr)
 
 # ---- Join datasets ----
-# I acknowledge the use of ChatGPT for assistance joining the rda files
 ei_data <- list.files("data", full.names = TRUE) |> # List all files in the data folder
   keep(~ !str_starts(basename(.), "ei")) |> # Exclude files that start with ei (as none of the indicator datasets do)
   map(~ {

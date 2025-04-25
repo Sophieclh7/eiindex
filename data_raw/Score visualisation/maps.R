@@ -45,7 +45,6 @@ print(school_type_map)
 
 # ---- Create lowest scoring areas maps ----
 # Create a new function to add binary variable column
-# I acknowledge the use of ChatGPT to help create this function
 lowest_scoring_function <- function(data, column) {
   data |>
     mutate(!!paste0(column, "_lowest") := # Add column called domain/subdomain_lowest for lowest scoring binary variable
