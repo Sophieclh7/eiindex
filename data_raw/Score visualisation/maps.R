@@ -59,7 +59,7 @@ ei_spatial_data <- lowest_scoring_function(ei_spatial_data, "attainment_subdomai
 ei_spatial_data <- lowest_scoring_function(ei_spatial_data, "deprivation_subdomain_decile")
 ei_spatial_data <- lowest_scoring_function(ei_spatial_data, "school_type_subdomain_decile")
 
-# Create a new function to handle manual colors for the categories
+# Create new function for lowest scoring map
 ei_heatmap_function_lowest <- function(data, column, title) {
   ggplot(data) +
     geom_sf(aes(fill = .data[[column]]), color = NA) +  # Fill with the column

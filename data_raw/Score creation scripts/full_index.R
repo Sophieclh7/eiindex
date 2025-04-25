@@ -14,5 +14,5 @@ ei_index$pcon_name <- ifelse(ei_index$pcon_code %in% c("E14001055", "E14001017")
                              paste0(ei_index$pcon_name, "^"),
                              ei_index$pcon_name) # Replaces original pcon_name column with the new column including ^
 
-# Save output to data/folder
+# ---- Save output to data/folder ----
 usethis::use_data(ei_index, overwrite = TRUE)
